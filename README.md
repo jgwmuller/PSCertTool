@@ -42,15 +42,25 @@ Download `CertTool.ps1` from this repository, or clone it:
 git clone https://github.com/YOUR_USERNAME/PSCertTool.git
 ```
 
-### 2. Allow script execution (if needed)
+### 2. Unblock the file
 
-Open PowerShell as your regular user and run:
+Windows marks downloaded files as "from the internet" and will block them by default. Unblock the file before running it:
+
+```powershell
+Unblock-File -Path ".\CertTool.ps1"
+```
+
+Alternatively: right-click `CertTool.ps1` → **Properties** → tick **Unblock** at the bottom → OK.
+
+### 3. Allow script execution (if needed)
+
+If PowerShell still refuses to run the script, set the execution policy for your user:
 
 ```powershell
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-### 3. Run
+### 4. Run
 
 Right-click `CertTool.ps1` → **Run with PowerShell**, or from a terminal:
 
