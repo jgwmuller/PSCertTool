@@ -2,7 +2,7 @@
 
 PowerShell GUI tool for creating self-signed certificates and converting existing PFX files — powered by OpenSSL, no certificate store required.
 
-> **UI language:** Dutch (Nederlands)
+> **UI languages:** Dutch (Nederlands) · English
 
 ---
 
@@ -11,6 +11,7 @@ PowerShell GUI tool for creating self-signed certificates and converting existin
 - **Create** self-signed certificates (RSA 2048/4096, SHA256/384/512, custom validity)
 - **Convert** existing PFX/P12 files to other formats
 - **Export** to any combination of: PFX/P12, PEM (cert + key), DER, P7B/PKCS#7
+- **Multilingual** — choose Dutch or English at startup; easily extendable to other languages
 - **Auto-installs OpenSSL** via `winget` if not present — or lets you point to it manually
 - **No certificate store pollution** — all operations go directly through OpenSSL to files
 - Copyable PFX password in the result dialog (no more typing it over)
@@ -61,34 +62,38 @@ Right-click `CertTool.ps1` → **Run with PowerShell**, or from a terminal:
 
 ## Usage
 
-### Create a new certificate
+### Step 1 — Choose your language
 
-1. Click **Nieuw certificaat aanmaken**
+On first launch a language picker appears. Select **Nederlands** or **English**. All labels, buttons, and messages will follow your choice.
+
+### Step 2 — Create a new certificate
+
+1. Click **Create new certificate** / **Nieuw certificaat aanmaken**
 2. Fill in the certificate details:
 
-   | Field | Description |
-   |---|---|
-   | Naam (CN) | Common Name — e.g. `MyApp` or `server.domain.local` |
-   | Referentie (OU) | Organisational Unit / reference number |
-   | Organisatie (O) | Organisation name |
-   | Locatie (L) | City / location |
-   | Land (C) | Two-letter country code, e.g. `NL` |
-   | Sleutellengte | RSA key size: `2048` or `4096` |
-   | Hash algoritme | `SHA256`, `SHA384` (default), or `SHA512` |
-   | Geldigheid | Validity in days: 30 / 60 / 90 / 120 / 150 / 180 / 365 / 730 / 1095 / 1825 |
+   | Field (EN) | Field (NL) | Description |
+   |---|---|---|
+   | Name (CN) | Naam (CN) | Common Name — e.g. `MyApp` or `server.domain.local` |
+   | Reference (OU) | Referentie (OU) | Organisational Unit / reference number |
+   | Organisation (O) | Organisatie (O) | Organisation name |
+   | Location (L) | Locatie (L) | City / location |
+   | Country (C) | Land (C) | Two-letter country code, e.g. `NL` |
+   | Key length | Sleutellengte | RSA key size: `2048` or `4096` |
+   | Hash algorithm | Hash algoritme | `SHA256`, `SHA384` (default), or `SHA512` |
+   | Validity (days) | Geldigheid (dagen) | 30 / 60 / 90 / 120 / 150 / 180 / 365 / 730 / 1095 / 1825 |
 
 3. Select an output folder
 4. Tick the desired output formats
-5. Click **Aanmaken**
-6. Copy the generated PFX password from the result dialog
+5. Click **Create** / **Aanmaken**
+6. Copy the generated PFX password from the result dialog — it is not stored anywhere
 
-### Convert an existing PFX
+### Step 3 — Or convert an existing PFX
 
-1. Click **Bestaand certificaat converteren**
+1. Click **Convert existing certificate** / **Bestaand certificaat converteren**
 2. Browse to your `.pfx` or `.p12` file
 3. Enter the current password
 4. Select an output folder and desired formats
-5. Click **Converteren**
+5. Click **Convert** / **Converteren**
 6. A new PFX password is generated if PFX is selected as output format
 
 ---
@@ -115,6 +120,16 @@ On startup, the script searches for `openssl.exe` in the following order:
 
 ---
 
+## Adding a Language
+
+All UI strings live in the `$Translations` hashtable near the top of `CertTool.ps1`. To add a third language (e.g. German):
+
+1. Copy the `EN = @{ ... }` block and rename it `DE`
+2. Translate all string values
+3. Add a button for it in the `Show-LanguagePicker` function
+
+---
+
 ## Security Notes
 
 - Private keys (`.key`) are exported **unencrypted** in PEM mode — protect your output folder accordingly
@@ -126,4 +141,4 @@ On startup, the script searches for `openssl.exe` in the following order:
 ## Author
 
 **Johannes Muller**  
-Version 1.0 — 2026-06-18
+Version 1.1 — 2026-06-18
